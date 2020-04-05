@@ -11,7 +11,7 @@ func testSetup() *Board {
 	return NewBoard()
 }
 
-func TestLoadSimpleTestMap(t *testing.T) {
+func TestLoadSimpleTextTestMap(t *testing.T) {
 	const (
 		F = false
 		T = true
@@ -29,7 +29,7 @@ func TestLoadSimpleTestMap(t *testing.T) {
 	)
 
 	board := testSetup()
-	err := board.LoadPreset("testmap1.txt")
+	err := board.LoadTxtMap("testmap1.txt")
 
 	assert.Equal(t, nil, err, "An error should not occur")
 
@@ -48,7 +48,10 @@ func TestLoadSimpleTestMap(t *testing.T) {
 	// verify all the tiles
 	for y := 0; y < 5; y++ {
 		for x := 0; x < 5; x++ {
+			fmt.Printf("%d", board.Tiles[y][x].Resource)
 			assert.Equal(t, expectedTiles[y][x], board.Tiles[y][x].Resource != RESOURCE_BLANK, "Tile did not match expectation")
 		}
+		fmt.Print("\n")
 	}
+	fmt.Print("\n")
 }
