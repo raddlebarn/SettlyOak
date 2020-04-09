@@ -24,6 +24,9 @@ Key:
 var ErrInvalidChar = errors.New("invalid character")
 
 // LoadPreset loads a preset from a []byte
+// TODO: move most of this into LoadTxtMap; this should be just the
+// randomisation and conversion to Tiles, rather than processing the
+// txt data
 func (board *Board) LoadPreset(data []byte) error {
 	board.rand = NewTimeRandom()
 
@@ -75,14 +78,21 @@ func (board *Board) LoadPreset(data []byte) error {
 
 // LoadTxtMap loads a board from a .txt map file. This does not have
 // the ability to specify any map generation parameters.
-func (board *Board) LoadTxtMap(fp string) error {
+func LoadTxtMap(fp string) (*Board, error) {
 	// read entire file into a buffer as this is just a map preset
-	// TODO: support loading entire scenarios
 	data, err := ioutil.ReadFile(fp)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return board.LoadPreset(data)
+
+	// TODO: convert data to [][]byte of tile characters
+
+	board := NewBoard()
+	err = board.LoadPreset(data)
+	if err != nil {
+		return nil, err
+	}
+	return board, nil
 }
 
 // newRandomTile produces a random Tile from all the available

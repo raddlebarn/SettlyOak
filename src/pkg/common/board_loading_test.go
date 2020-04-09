@@ -7,10 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func testSetup() *Board {
-	return NewBoard()
-}
-
 func TestLoadSimpleTextTestMap(t *testing.T) {
 	const (
 		F = false
@@ -28,8 +24,7 @@ func TestLoadSimpleTextTestMap(t *testing.T) {
 		}
 	)
 
-	board := testSetup()
-	err := board.LoadTxtMap("testmap1.txt")
+	board, err := LoadTxtMap("testmap1.txt")
 
 	assert.Equal(t, nil, err, "An error should not occur")
 
