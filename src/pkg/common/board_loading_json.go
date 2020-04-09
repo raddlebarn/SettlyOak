@@ -25,6 +25,14 @@ func LoadJSONMap(fp string) (*Board, error) {
 	decoder := json.NewDecoder(file)
 	decoder.Decode(&m)
 
-	// TODO: convert JSONMap to a board
+	// convert JSONMap to a board
+	tiles := m.Tiles
+	numbers := m.Numbers
+	board := NewBoard()
+	err = board.LoadPreset(tiles, numbers)
+	if err != nil {
+		return nil, err
+	}
+
 	return board, nil
 }
