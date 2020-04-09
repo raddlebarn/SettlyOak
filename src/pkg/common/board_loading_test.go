@@ -7,11 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func testSetup() *Board {
-	return NewBoard()
-}
-
-func TestLoadSimpleTextTestMap(t *testing.T) {
+func verifyTestMap1(t *testing.T, board *Board) {
 	const (
 		F = false
 		T = true
@@ -27,11 +23,6 @@ func TestLoadSimpleTextTestMap(t *testing.T) {
 			{T, T, T, F, F},
 		}
 	)
-
-	board := testSetup()
-	err := board.LoadTxtMap("testmap1.txt")
-
-	assert.Equal(t, nil, err, "An error should not occur")
 
 	// check dimensions
 	for y := 0; y < len(board.Tiles); y++ {
@@ -54,4 +45,16 @@ func TestLoadSimpleTextTestMap(t *testing.T) {
 		fmt.Print("\n")
 	}
 	fmt.Print("\n")
+}
+
+func TestLoadTextTestMap1(t *testing.T) {
+	board, err := LoadTxtMap("testmap1.txt")
+	assert.Equal(t, nil, err, "An error should not occur")
+	verifyTestMap1(t, board)
+}
+
+func TestLoadJsonTestMap1(t *testing.T) {
+	board, err := LoadJSONMap("testmap1.json")
+	assert.Equal(t, nil, err, "An error should not occur")
+	verifyTestMap1(t, board)
 }
